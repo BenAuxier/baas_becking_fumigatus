@@ -1,4 +1,4 @@
-There are several Rscripts that were used to create the Figures that are included in the paper. In this file, it will be explained which Rscripts were used for each of the Figures. 
+There are several Rscripts that were used to create the Figures that are included in the paper. In this file, it will be explained which Rscripts were used for each of the Figures. The Figures were made in RStudio (Version 2026.01+403)
 
 **Variant_counts_BB.R**
 This script can be used to plot the .rds files that orginate from XX. The files are made per dataset; LF, HF and Global.
