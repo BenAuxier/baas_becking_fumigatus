@@ -13,7 +13,7 @@ This script can be used to make three different graphs, the data used in this Rs
 This script is used to make the PCA from the plink that was performed in XX. The Rscript also shows the additional filtering that was performed to improve the visualization in this plot.
 
 **Clonal_analysis_BB.R**
-This script can be used to make five different graphs, the data used in this Rscript comes from XX:
+This script can be used to make five different graphs, the data used in this Rscript comes from XX. The fist two figures use code that is used by Snelders et al., 2025 (https://github.com/fungalsnelderslab/2024_Dutch_fumigatus).
 1. A histogram showing the pairwise DST (>0.9) for isolates.
 2. A histogram zooming in on the higher DST values, with the vertical line showing where we cut of the clonal limit.
 3. A barplot that shows the percentage of isolates of each subsample that are present in a clonal group.
@@ -21,7 +21,7 @@ This script can be used to make five different graphs, the data used in this Rsc
 5. A stacked barplot that shows the percentage of isolates that were present in clonal groups. The categories are the same as in 2.
 
 **Fst_BB.R**
-This script can be used to make three different FST graphs, the data using in this Rscript comes from XX:
+This script can be used to make three different FST graphs, the data using in this Rscript comes from XX. The code is originally written by Snelders et al., 2025 (https://github.com/fungalsnelderslab/2024_Dutch_fumigatus).
 1. The FST comparing the LF and HF population.
 2. The FST comparing the LF and the Dutch sensitive population of Snelders et al., 2025.
 3. The FST comparing the HF and the Dutch resistant population of Snelders et al., 2025.
