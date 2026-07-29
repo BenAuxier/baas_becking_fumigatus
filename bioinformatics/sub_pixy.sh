@@ -1,4 +1,6 @@
 #!/bin/bash
+##Similar to pixy.sh only the annotation of the populations is different, as we now look at the subpopulations (=sampling sites within the heaps) in the HF and LF populations.
+
 #bcftools query -l groenafval_clean_filtered_123_AD_5.vcf.gz > LF_populations.txt
 
 ##To add the population to the list
