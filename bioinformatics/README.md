@@ -17,7 +17,7 @@ This script was used to approximate the average coverage per sample based on the
 This script was used to take specific locations in the genome related to multi-fungicide resistance and mutation rate from the combined.vcf.gz.
 The variants are then printed into an .tsv file. This script was used to genotypically determine the % of triazole-resistance (based on the TR haplotype of the _cyp51A_ in the populations. 
 
-**extract_VAF_260.R**
+**extract_VAF_750.R**
 This Rscript is used to filter on the VAF values; it removes variants that are too far from 0 or 1. The variants per sample are than counted and random subsets of that increase in steps of 10 are made.
 The .rds output file is used to make the plot in plotting/Variant_counts_BB.R that was used to estimate the number of isolates that were before we stopped sequencing. 
 
