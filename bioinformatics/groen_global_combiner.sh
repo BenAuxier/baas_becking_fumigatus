@@ -1,14 +1,15 @@
 export PATH="/lustre/BIF/nobackup/brigg002/programs/conda/bin"
 REFERENCE=/lustre/BIF/nobackup/brigg002/novogene2024/Af293_combined.fna
 
+#The list files contains the sample names + location of the samples in the different datasets.
 export PATH="/lustre/BIF/nobackup/brigg002/programs/conda/bin"
-#Still have to check if it goes into the folders correctly
 #gatk CombineGVCFs -R $REFERENCE -O LFHF_global.g.vcf.gz -V groen_global_GVCF.list
 #Joined genotyping - the combined variants will be spit out by this
 #gatk IndexFeatureFile -I  LFHF_global.g.vcf.gz
 #gatk GenotypeGVCFs -R $REFERENCE -O LFHF_global.vcf.gz -V LFHF_global.g.vcf.gz
 
-#The variants will be filtered based on their likelyhood  (see criteria in script); filter out low quality variants
+#The variants will be filtered based on their likelyhood  (see criteria in script); filter out low quality variants.
+#The filtering of the SNPs and INDELs is done with seperate criteria. 
 #export PATH="/lustre/BIF/nobackup/brigg002/programs/conda/bin"
 #gatk SplitVcfs -I LFHF_global.vcf.gz --SNP_OUTPUT LFHF_global_combined_SNPs.vcf.gz --INDEL_OUTPUT LFHF_global_combined_INDELs.vcf.gz --STRICT false
 #echo "starting filtering SNPs"
@@ -47,6 +48,7 @@ export PATH="/lustre/BIF/nobackup/brigg002/programs/conda/bin"
 #echo "If VAF shouldn't be included, GT has been set to NA (.)"
 #echo "Merge SNPs and INDELs"
 
+#Brings the INDEL + SNP files back together + filters on the allele depth (AD) to make sure that either the GT=0 or GT=1 is supported by at least 5 reads.
 #bcftools concat -O z -a LFHF_global_INDELs_VAF_adjusted.vcf.gz LFHF_global_SNPs_VAF_adjusted.vcf.gz > LFHF_VAF_adjusted_global.vcf.gz
 #export PATH="/lustre/BIF/nobackup/brigg002/programs/conda/bin"
 #gatk IndexFeatureFile -I LFHF_VAF_adjusted_global.vcf.gz
@@ -82,7 +84,7 @@ export PATH="/usr/bin"
 #    print $0, perc
 #}' > LFHF_global_perc_variants_AD_5.tsv #This file can be used to check if the samples removed are correct
 
-
+#Removes samples where less than 90% of the variants have sufficient quality. 
 #bcftools stats -s - LFHF_global_good_variants_AD_5.vcf.gz | \
 #awk -v total="$TOTAL_VAR" 'BEGIN{OFS="\t"}
 #$1=="PSC" {
@@ -100,20 +102,23 @@ export PATH="/usr/bin"
 
 #echo "Removing outgroup samples"
 
+#Count the variants that are present per sample
 #bcftools query -f '[%SAMPLE\t%GT\n]' LFHF_global_bad_samples_removed_AD_5.vcf.gz | \
 #awk -F '\t' '$2 ~ /1/ {count[$1]++} END {for (s in count) print s, count[s]}' | \
 #sort > LFHF_global_variant_counts_AD_5.list
 
+#Remove sample with too high variants as these are of a divergent group
 awk '$2 <= 50000 {print $1}' LFHF_global_variant_counts_AD_5.list > LFHF_global_no_outgroup_AD_5_50000.list
 bcftools view -S LFHF_global_no_outgroup_AD_5_50000.list -Oz -o LFHF_global_clean_filtered_AD_5_50000.vcf.gz LFHF_global_bad_samples_removed_AD_5.vcf.gz
 bcftools index -f LFHF_global_clean_filtered_AD_5_50000.vcf.gz
 
-
+#Removes variants that are present in either non of the samples or in all of the samples. 
 echo "Start filtering on AC"
 TOTAL_SAMPLE=$(bcftools query -l LFHF_global_clean_filtered_AD_5_50000.vcf.gz | wc -l)
 bcftools view -i "INFO/AC!=0 & INFO/AC<$TOTAL_SAMPLE" LFHF_global_clean_filtered_AD_5_50000.vcf.gz -Oz -o LFHF_global_final_AD_5_50000.vcf.gz
 bcftools index -f LFHF_global_final_AD_5_50000.vcf.gz
 
 echo "Ready to continue in R"
+
                                  
 
