@@ -12,6 +12,7 @@ REFERENCE=/lustre/BIF/nobackup/brigg002/novogene2024/Af293_combined.fna
 #echo '@RG\tID:'$sample_name'\tSM:'$sample_name'\tLB:new_global'
 #done
 
+#Fastp will be used for QC of the FASTQ sequences that are part of the Global population, this part was skipped for the LF/HF sequences)
 #for sample in /lustre/BIF/nobackup/brigg002/new_global_data/fisher_2026/ER*
 #do
 #        sample_name="$(basename $sample)"
@@ -20,7 +21,7 @@ REFERENCE=/lustre/BIF/nobackup/brigg002/novogene2024/Af293_combined.fna
 #        fastp -i "$sample"/*_1.fastq.gz -I "$sample"/*_2.fastq.gz -o fastp_out/"$sample_name"/"$sample_name"_1.fastq.gz -O fastp_out/"$sample_name"/"$sample_name"_2.fastq.gz -h -h fastp_out/"$sample_name"/"${sample_name}.html" -j -j fastp_out/"$sample_name"/"${sample_name}.json"
 #done
 
-
+#The BAM files are made from the FASTQ sequences coming out of the fastp, the LF/HF population uses the orginal FASTQ files. 
 #for sample in /lustre/BIF/nobackup/brigg002/new_global_data/fisher_2026/fastp_out/ER*
 #do 
 #       sample_name="FISHER_2026_$(basename $sample)" 
