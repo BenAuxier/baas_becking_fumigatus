@@ -5,7 +5,7 @@ library(vcfR)
 library(dplyr)
 
 # Read the VCF file
-#vcf_file <- "/lustre/BIF/nobackup/brigg002/analysis_new_global_data/global_final_AD_5.vcf.gz" #This is the vcf.gz after filtering out high-variant samples (n=2).
+#vcf_file <- "/lustre/BIF/nobackup/brigg002/analysis_new_global_data/global_clean_filtered_AD_5.vcf.gz" #This is the vcf.gz after filtering out high-variant samples (n=2).
 #global_vaf <- read.vcfR(vcf_file, verbose = FALSE, convertNA = TRUE)
 
 # Extract the VAF values as numeric
