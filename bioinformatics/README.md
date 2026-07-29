@@ -24,9 +24,6 @@ The .rds output file is used to make the plot in plotting/Variant_counts_BB.R th
 **pixy.sh**
 This script was used to determine the genomic diversity (pi) in the whole genome of the three populations (LF/HF/Global) that were part of this study. 
 
-**chrom_4_pixy.sh**
-This script was used to determine the genomic diversity (pi) in the chromosome 4 of the three populations (LF/HF/Global) that were part of this study. 
-
 **sub_pixy.sh**
 This script was used to determine the genomic diversity (pi) in the whole genome of the subpopulations (=sampling spot) in two of the populations (LF/HF).
 
