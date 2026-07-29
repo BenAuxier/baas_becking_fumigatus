@@ -50,3 +50,4 @@ It also compares the HF samples to the resistant Dutch isolates that paper. It a
 - bcftools -> v1.23.1 (hitslib 1.23.1)
 - plink -> v1.9.0-b.7.7
 - vcftools -> v0.1.17
+- R -> v4.5.3
