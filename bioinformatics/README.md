@@ -48,3 +48,4 @@ It also compares the HF samples to the resistant Dutch isolates that paper. It a
 - plink -> v1.9.0-b.7.7
 - vcftools -> v0.1.17
 - R -> v4.5.3
+- pixy -> v2.0.0.beta14
