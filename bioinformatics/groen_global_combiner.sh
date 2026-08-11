@@ -108,7 +108,7 @@ export PATH="/usr/bin"
 #sort > LFHF_global_variant_counts_AD_5.list
 
 #Remove sample with too high variants as these are of a divergent group
-awk '$2 <= 50000 {print $1}' LFHF_global_variant_counts_AD_5.list > LFHF_global_no_outgroup_AD_5_50000.list
+awk '$2 <= 50000 {print $1}' LFHF_global_variant_counts_AD_5.list > LFHF_global_no_outgroup_AD_5_50000.list #For the variant plot, the variant filter was set at 100,000
 bcftools view -S LFHF_global_no_outgroup_AD_5_50000.list -Oz -o LFHF_global_clean_filtered_AD_5_50000.vcf.gz LFHF_global_bad_samples_removed_AD_5.vcf.gz
 bcftools index -f LFHF_global_clean_filtered_AD_5_50000.vcf.gz
 
