@@ -29,7 +29,7 @@ This script was used to determine the genomic diversity (pi) in the whole genome
 
 **PCA.sh** (Based on https://github.com/fungalsnelderslab/2024_Dutch_fumigatus/tree/main/pca_plotting)
 This script was performed to make the PCA with all three populations. Since at first there was a group of outliers that were scewing the data visualization, additional filtering was performed based on the PC values in R.
-The isolates that would be removed were listed in the .txt file that would than filter them, and re-do the plink analysis. 
+The isolates that would be removed were listed in the .txt file that would than filter them, and re-do the plink analysis. The output of this analysis is also used for the the clonal analysis. 
 
 **HF_LF_Fst.sh** (Based on https://github.com/fungalsnelderslab/2024_Dutch_fumigatus/tree/main/pca_plotting)
 This script compares the whole genomes of the LF and HF populations by calculating the Fixation Index for every 10 kb. 
