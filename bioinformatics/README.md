@@ -38,6 +38,8 @@ This script compares the whole genomes of the LF and HF populations by calculati
 This script compares the whole genome of the LF to the sensitive Dutch isolates from Snelders et al., 2025. 
 It also compares the HF samples to the resistant Dutch isolates that paper. It again calcultates the Fixation Index for every 10kb. 
 
+**resistance.sh**
+This script is used to pull variants in specific locations from the combined.vcf.gz. 
 
 **Versions of software**
 - Fastp -> v0.23.4
