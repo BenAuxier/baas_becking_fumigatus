@@ -1,5 +1,6 @@
 library(ggplot2)
 library(cowplot)
+library(dplyr)
 
 setwd("~/Library/CloudStorage/OneDrive-WageningenUniversity&Research/3_Experimental_work/4_groenafval/Sequencing")
 getwd()
@@ -22,12 +23,49 @@ cyp51A <- data.frame(CHROM="4",
                      POS=1780204,
                      text="cyp51A")
 
+SdhB <- data.frame(CHROM="5",
+         POS=2654913,
+         text="sdhB")
+
+CytB <- data.frame(CHROM="9",
+         POS=428,
+         text="cytB")
+
+CytB_label <- data.frame(CHROM="8",
+                         POS=1400000,
+                         text="cytB")
+
+BenA <- data.frame(CHROM="1",
+         POS=2849059,
+         text="benA")
+
+
+
+
+HF_LF_Fst
+df_fst_per_chrom <- HF_LF_Fst %>%
+  group_by(CHROM) %>%
+  summarise(mean_WEIGHTED_FST = mean(WEIGHTED_FST, na.rm = TRUE))
+df_fst_per_chrom
+
+write.csv(HF_LF_Fst, "Fst_per_chrom.csv")
+
+
+
+
 top <- ggplot(HF_LF_Fst) + 
-  geom_segment(data=cyp51A,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey30")+
+  geom_segment(data=cyp51A,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=SdhB,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=CytB,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=BenA,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_hline(yintercept=0.3, color="black") + 
   geom_text(data=cyp51A,parse=T,aes(x=POS,y=0.95,label='paste(italic("cyp51"),"A")'))+
-  geom_point(aes(x=POS,y=WEIGHTED_FST,color=CHROM),size=0.3) + 
-  facet_grid(cols=vars(CHROM),scales="free",space="free") +
-  theme_classic(base_size=14) + ylim(0.00,1) +
+  geom_text(data=SdhB, parse=T, aes(x=POS, y=0.95, label='paste(italic("sdh"),"B")')) +
+  geom_text(data=CytB_label, parse=T, aes(x=POS, y=0.95, label='paste(italic("cyt"),"B")')) +
+  geom_text(data=BenA, parse=T, aes(x=POS, y=0.95, label='paste(italic("ben"),"A")')) +
+  geom_point(aes(x=POS,y=WEIGHTED_FST,color=CHROM),size=0.7) + 
+  facet_grid(cols=vars(CHROM),scales="free", space="free") +
+  theme_classic(base_size=30) + ylim(0.00,1) +
   theme(legend.position="none",
         panel.spacing=unit(0.01,"cm"),
         axis.text.x=element_blank(),
@@ -37,7 +75,7 @@ top <- ggplot(HF_LF_Fst) +
 
 top
 
-ragg::agg_tiff("HF_LF_Fst_v01.tiff", width = 30, height = 4.5, units = "in", res = 300)
+ragg::agg_tiff("HF_LF_Fst_v02.tiff", width = 30, height = 7, units = "in", res = 280)
 top
 dev.off()
 
@@ -58,11 +96,18 @@ HF_snel_Fst$CHROM[HF_snel_Fst$CHROM == "NC_007201.1"] <- "8"
 HF_snel_Fst$CHROM[HF_snel_Fst$CHROM == "JQ346808.1"] <- "9"
 
 HF_snel_plot <- ggplot(HF_snel_Fst) + 
-  geom_segment(data=cyp51A,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey30")+
+  geom_segment(data=cyp51A,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=SdhB,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=CytB,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=BenA,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_hline(yintercept=0.3, color="black") + 
   geom_text(data=cyp51A,parse=T,aes(x=POS,y=0.95,label='paste(italic("cyp51"),"A")'))+
-  geom_point(aes(x=POS,y=WEIGHTED_FST,color=CHROM),size=0.3) + 
+  geom_text(data=SdhB, parse=T, aes(x=POS, y=0.95, label='paste(italic("sdh"),"B")')) +
+  geom_text(data=CytB_label, parse=T, aes(x=POS, y=0.95, label='paste(italic("cyt"),"B")')) +
+  geom_text(data=BenA, parse=T, aes(x=POS, y=0.95, label='paste(italic("ben"),"A")')) +
+  geom_point(aes(x=POS,y=WEIGHTED_FST,color=CHROM),size=0.7) + 
   facet_grid(cols=vars(CHROM),scales="free",space="free") +
-  theme_classic(base_size=14) + ylim(0.00,1) +
+  theme_classic(base_size=30) + ylim(0.00,1) +
   theme(legend.position="none",
         panel.spacing=unit(0.01,"cm"),
         axis.text.x=element_blank(),
@@ -72,7 +117,7 @@ HF_snel_plot <- ggplot(HF_snel_Fst) +
 
 HF_snel_plot
 
-ragg::agg_tiff("HF_snel_Fst_v01.tiff", width = 30, height = 4.5, units = "in", res = 300)
+ragg::agg_tiff("HF_snel_Fst_v02.tiff", width = 30, height = 7, units = "in", res = 280)
 HF_snel_plot
 dev.off()
 
@@ -91,11 +136,18 @@ LF_snel_Fst$CHROM[LF_snel_Fst$CHROM == "NC_007201.1"] <- "8"
 LF_snel_Fst$CHROM[LF_snel_Fst$CHROM == "JQ346808.1"] <- "9"
 
 LF_snel_plot <- ggplot(LF_snel_Fst) + 
-  geom_segment(data=cyp51A,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey30")+
+  geom_segment(data=cyp51A,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=SdhB,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=CytB,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_segment(data=BenA,aes(x=POS,xend=POS,y=0,yend=0.9),inherit.aes = FALSE,color="grey")+
+  geom_hline(yintercept=0.3, color="black") + 
   geom_text(data=cyp51A,parse=T,aes(x=POS,y=0.95,label='paste(italic("cyp51"),"A")'))+
-  geom_point(aes(x=POS,y=WEIGHTED_FST,color=CHROM),size=0.3) + 
+  geom_text(data=SdhB, parse=T, aes(x=POS, y=0.95, label='paste(italic("sdh"),"B")')) +
+  geom_text(data=CytB_label, parse=T, aes(x=POS, y=0.95, label='paste(italic("cyt"),"B")')) +
+  geom_text(data=BenA, parse=T, aes(x=POS, y=0.95, label='paste(italic("ben"),"A")')) +
+  geom_point(aes(x=POS,y=WEIGHTED_FST,color=CHROM),size=0.7) + 
   facet_grid(cols=vars(CHROM),scales="free",space="free") +
-  theme_classic(base_size=14) + ylim(0.00,1) +
+  theme_classic(base_size=30) + ylim(0.00,1) +
   theme(legend.position="none",
         panel.spacing=unit(0.01,"cm"),
         axis.text.x=element_blank(),
@@ -105,7 +157,7 @@ LF_snel_plot <- ggplot(LF_snel_Fst) +
 
 LF_snel_plot
 
-ragg::agg_tiff("LF_snel_Fst_v01.tiff", width = 30, height = 4.5, units = "in", res = 300)
+ragg::agg_tiff("LF_snel_Fst_v02.tiff", width = 30, height = 7, units = "in", res = 280)
 LF_snel_plot
 dev.off()
 
