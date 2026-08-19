@@ -20,7 +20,7 @@ plot_data
 plot_data <- plot_data[order(match(plot_data$dataset, c("Global", "Low fungicide", "High fungicide"))), ]
 
 
-ragg::agg_tiff("HFLF_Global_variant_plot.tiff", width = 10.62, height = 6.98, units = "in", res = 300) #to get a high-resolution image
+ragg::agg_tiff("HFLF_Global_variant_plot_v03.tiff", width = 10.62, height = 6.98, units = "in", res = 300) #to get a high-resolution image
 ggplot(plot_data, aes(x = subset_size, y = nrows, color = dataset)) +
   geom_point(size = 1.5, alpha = 0.8) +
   labs(
@@ -30,11 +30,18 @@ ggplot(plot_data, aes(x = subset_size, y = nrows, color = dataset)) +
   ) +
   scale_color_manual(values = c(
     "Global" = "#F0DDE4",
-    "High fungicide" = "#ffb8f2" ,
+    "High fungicide" = "#FF7F00" ,
     "Low fungicide" = "#850D6F"
   )) +
   coord_cartesian(ylim = c(0, 160000), xlim = c(0, 500)) +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = c(0.90, 0.20)) +
+  theme(
+    legend.title=element_blank(), 
+    axis.text = element_text(size = 13),
+    axis.title = element_text(size = 16),
+    legend.text = element_text(size = 14) 
+  )
 
 
 dev.off()
