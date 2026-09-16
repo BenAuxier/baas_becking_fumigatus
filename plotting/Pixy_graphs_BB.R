@@ -14,34 +14,40 @@ LFHF_global_pi <- read_xlsx("LFHF_global_pi_v02.xlsx") #the average values are m
 class(LFHF_global_pi)
 LFHF_global_pi
 
-filtered_LFHF_global_pi <- LFHF_global_pi %>% filter(chromosome %in% c("average", "NC_007197.1"))
+filtered_LFHF_global_pi <- LFHF_global_pi %>% filter(chromosome %in% c("average", "NC_007197.1", "JQ346808.1"))
 filtered_LFHF_global_pi
 
-ragg::agg_tiff("Pixy_HFLF_global_v03.tiff", width = 6.98, height = 4, units = "in", res = 300)
+filtered_LFHF_global_pi$chromosome <- factor(
+  filtered_LFHF_global_pi$chromosome,
+  levels = c("average", "NC_007197.1", "JQ346808.1")
+)
+
+ragg::agg_tiff("Pixy_HFLF_global_v04.tiff", width = 6.98, height = 4, units = "in", res = 300)
 ggplot(filtered_LFHF_global_pi, aes(x=pop, y=avg_pi, fill = chromosome)) +
   geom_bar(stat = "identity", position = "dodge2") +
-  scale_fill_manual(values = c(
-    "average" = "#850D6F" ,
-    "NC_007197.1" = "#ffb8f2"
-  )) +
   scale_y_continuous(limits = c(0, 0.06)) +
   scale_fill_manual (
     values = c(
       "average" = "#850D6F" ,
-      "NC_007197.1" = "#ffb8f2"),
+      "NC_007197.1" = "#ffb8f2",
+      "JQ346808.1" = "#FF7F00"),
     labels = c(
     "average" = "Genome-wide average", 
-    "NC_007197.1" = "Chromosome 4 average"
+    "NC_007197.1" = "Chromosome 4 average",
+    "JQ346808.1" = "Mitochondrial average"
   )) +
   scale_x_discrete(limits = c("Global", "Low fungicide", "High fungicide")) +
 labs(
   x = "Population",
-  y = "Pi (π)",
+  y = "Average genomic diversity (π)",
 ) +
   theme_minimal() +
-  theme(legend.position = c(0.85, 0.90)) +
-  theme(legend.title=element_blank())
-
+  theme(legend.position = c(0.80, 0.90)) +
+  theme(legend.title=element_blank(), 
+        axis.text = element_text(size = 10),
+        axis.title = element_text(size = 11),
+        legend.text = element_text(size = 10)) 
+  
 dev.off()
 
 
@@ -50,9 +56,13 @@ sub_pop <- read_xlsx("HFLF_sub_pi_average.xlsx")
 class(sub_pop)
 sub_pop
 
-ragg::agg_tiff("Pixy_HFLF_subpop_v02.tiff", width = 6.98, height = 4, units = "in", res = 300)
+ragg::agg_tiff("Pixy_HFLF_subpop_v03.tiff", width = 6.98, height = 4, units = "in", res = 300)
 ggplot(sub_pop, aes(x=pop, y=avg_pi, fill = sub_pop)) +
   geom_bar(stat = "identity", position = "dodge2", width = 0.7) +
+  geom_text(aes(label = sub_pop),
+            position = position_dodge2(width = 0.7),
+            vjust = -0.6,
+            size = 3.5) +
   scale_y_continuous(limits = c(0, 0.06)) +
   scale_x_discrete(limits = c("Low fungicide", "High fungicide")) +
   scale_fill_manual (
@@ -73,9 +83,13 @@ ggplot(sub_pop, aes(x=pop, y=avg_pi, fill = sub_pop)) +
     y = "Pi (π)",
   ) +
   theme_minimal() +
-  geom_segment(aes(x=0.6, y=0.03686466, xend=1.4, yend=0.03686466), color = "azure4") +
-  geom_segment(aes(x=1.6, y=0.02193212, xend=2.4, yend=0.02193212), color = "azure4") +
-theme(legend.position = "none")
+  geom_segment(aes(x=0.6, y=0.03686466, xend=1.4, yend=0.03686466), color = "azure4", alpha = 0.2) +
+  geom_segment(aes(x=1.6, y=0.02193212, xend=2.4, yend=0.02193212), color = "azure4", alpha = 0.2) +
+theme(legend.position = "none") +
+  theme(axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12)) +
+  theme(axis.text.x = element_text(size = 10)) +
+  theme(axis.text.y = element_text(size = 10)) 
   
 dev.off()
 #Graph pi versus fungicide
