@@ -22,6 +22,7 @@ filtered_LFHF_global_pi$chromosome <- factor(
   levels = c("average", "NC_007197.1", "JQ346808.1")
 )
 
+#[need to add which figure this is]
 ragg::agg_tiff("Pixy_HFLF_global_v04.tiff", width = 6.98, height = 4, units = "in", res = 300)
 ggplot(filtered_LFHF_global_pi, aes(x=pop, y=avg_pi, fill = chromosome)) +
   geom_bar(stat = "identity", position = "dodge2") +
@@ -51,7 +52,7 @@ labs(
 dev.off()
 
 
-##Graphs of the subpopulations 
+##Graphs of the subpopulations [need to add which figure]
 sub_pop <- read_xlsx("HFLF_sub_pi_average.xlsx")
 class(sub_pop)
 sub_pop
