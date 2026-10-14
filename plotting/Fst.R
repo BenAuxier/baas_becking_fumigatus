@@ -17,6 +17,7 @@ HF_LF_Fst$CHROM[HF_LF_Fst$CHROM == "NC_007198.1"] <- "5"
 HF_LF_Fst$CHROM[HF_LF_Fst$CHROM == "NC_007199.1"] <- "6"
 HF_LF_Fst$CHROM[HF_LF_Fst$CHROM == "NC_007200.1"] <- "7"
 HF_LF_Fst$CHROM[HF_LF_Fst$CHROM == "NC_007201.1"] <- "8"
+#9 used as a hack way around calling it mitochondria
 HF_LF_Fst$CHROM[HF_LF_Fst$CHROM == "JQ346808.1"] <- "9"
 
 cyp51A <- data.frame(CHROM="4",
@@ -24,23 +25,22 @@ cyp51A <- data.frame(CHROM="4",
                      text="cyp51A")
 
 SdhB <- data.frame(CHROM="5",
-         POS=2654913,
-         text="sdhB")
+                   POS=2654913,
+                   text="sdhB")
 
+#mitochondrial
 CytB <- data.frame(CHROM="9",
-         POS=428,
-         text="cytB")
+                   POS=428,
+                   text="cytB")
 
+#a way to make it display in the correct spot
 CytB_label <- data.frame(CHROM="8",
                          POS=1400000,
                          text="cytB")
 
 BenA <- data.frame(CHROM="1",
-         POS=2849059,
-         text="benA")
-
-
-
+                   POS=2849059,
+                   text="benA")
 
 HF_LF_Fst
 df_fst_per_chrom <- HF_LF_Fst %>%
@@ -49,8 +49,6 @@ df_fst_per_chrom <- HF_LF_Fst %>%
 df_fst_per_chrom
 
 write.csv(HF_LF_Fst, "Fst_per_chrom.csv")
-
-
 
 
 top <- ggplot(HF_LF_Fst) + 
